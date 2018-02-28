@@ -59,6 +59,7 @@ def str2dt(datestr):
     datestr=datestr.replace("CONTINUE","").replace("'","") # fits file comment continued on next line
     datestr=re.sub(' UT.*','',datestr)
     fmts=["%Y-%m-%d %H:%M:%S.%f",
+          "%Y%m%d-%H%M%S.%f",
           "%Y-%m-%d %H:%M:%S",
           "%Y-%m-%d %H:%M:%SZ",
           "%Y-%m-%d %H:%M:%S.%fZ",
