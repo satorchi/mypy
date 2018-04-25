@@ -17,3 +17,5 @@ from .datefunctions import\
     tot_seconds,\
     roundTime
 
+from .quickplot import\
+    quickplot
