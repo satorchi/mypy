@@ -72,7 +72,9 @@ def str2dt(datestr):
           "%a %b %d %H:%M:%S %Y",
           "%b %d %H:%M:%S  %Y",
           "%d.%m.%Y  %H:%M",
-          "%Y%m%dT%H%M%S"]
+          "%Y%m%dT%H%M%S",
+          "%Y%m%dT%H%M%S.%f"]
+
 
     for fmt in fmts:
         try: return dt.datetime.strptime(datestr,fmt)
