@@ -56,8 +56,25 @@ def str2dt(datestr):
 
     if datestr.upper()=="NOW": return dtnow
 
+    datestr=datestr.strip()
     datestr=datestr.replace("CONTINUE","").replace("'","") # fits file comment continued on next line
-    datestr=re.sub(' UT.*','',datestr)
+    datestr=re.sub(' UT.*','',datestr) # remove time zone identifier
+
+    # dates sent from a French Windows machine
+    datestr=re.sub('[dD].c\.','12',datestr)
+    datestr=re.sub('[nN]ov\.','11',datestr)
+    datestr=re.sub('[oO]ct\.','10',datestr)
+    datestr=re.sub('[sS]ep\.','9',datestr)
+    datestr=re.sub('[aA]o.\.','8',datestr)
+    datestr=re.sub('[jJ]ui\.','7',datestr)
+    datestr=re.sub('[jJ]un\.','6',datestr)
+    datestr=re.sub('[mM]ai','5',datestr)
+    datestr=re.sub('[aA]vr\.','4',datestr)
+    datestr=re.sub('[mM]ar\.','3',datestr)
+    datestr=re.sub('[fF].v\.','2',datestr)
+    datestr=re.sub('[jJ]an\.','1',datestr)
+    datestr=datestr.replace(',','.')
+    
     fmts=["%Y-%m-%d %H:%M:%S.%f",
           "%Y%m%d-%H%M%S.%f",
           "%Y-%m-%d %H:%M:%S",
@@ -88,7 +105,7 @@ def str2dt(datestr):
         except: pass    
 
 
-    print "did not convert date string to datetime.  returning None: "+datestr
+    print "did not convert date string to datetime.  returning None: >>%s<<" % datestr
     return None
 
 # convert a timedelta to total number of seconds
