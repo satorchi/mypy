@@ -70,11 +70,12 @@ def str2dt(datestr):
     datestr=re.sub('[jJ]un\.','6',datestr)
     datestr=re.sub('[mM]ai','5',datestr)
     datestr=re.sub('[aA]vr\.','4',datestr)
-    datestr=re.sub('[mM]ar\.','3',datestr)
     datestr=re.sub('[jJ]an\.','1',datestr)
     datestr=re.sub('[jJ]anv\.','1',datestr)
     datestr=re.sub('[fF].vr\.','2',datestr)
     datestr=re.sub('[fF].v\.','2',datestr)
+    datestr=re.sub('[mM]ar\.','3',datestr)
+    datestr=re.sub('[mM]ars','3',datestr)
     datestr=datestr.replace(',','.')
     
     fmts=["%Y-%m-%d %H:%M:%S.%f",
