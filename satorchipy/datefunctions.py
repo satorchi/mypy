@@ -67,6 +67,8 @@ def str2dt(datestr):
     datestr=re.sub('[sS]ep\.','9',datestr)
     datestr=re.sub('[aA]o.\.','8',datestr)
     datestr=re.sub('[jJ]ui\.','7',datestr)
+    datestr=re.sub('[jJ]uin\.','7',datestr)
+    datestr=re.sub('[jJ]uin','7',datestr)
     datestr=re.sub('[jJ]un\.','6',datestr)
     datestr=re.sub('[mM]ai','5',datestr)
     datestr=re.sub('[aA]vr\.','4',datestr)
@@ -107,15 +109,20 @@ def str2dt(datestr):
         try: return dt.datetime.strptime(datestr,fmt)
         except: pass
 
-    # more special cases, assuming some time today
+    # special cases, assuming some time today
     ymd=dtnow.strftime('%Y-%m-%d')
     datestr_today=ymd+' '+datestr
     for fmt in fmts:
         try: return dt.datetime.strptime(datestr_today,fmt)
         except: pass    
 
+    # another special case:  fractional seconds given with only 3 places
+    datestr_today=datestr+'000'
+    for fmt in fmts:
+        try: return dt.datetime.strptime(datestr_today,fmt)
+        except: pass        
 
-    print "did not convert date string to datetime.  returning None: >>%s<<" % datestr
+    print "did not convert date string to datetime.  returning None: >>%s<<" % datestr_today
     return None
 
 # convert a timedelta to total number of seconds
