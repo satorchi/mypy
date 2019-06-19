@@ -37,6 +37,7 @@ $modified: Tue 26 Sep 2017 10:19:54 CEST
   moved to satorchipy: My python gadgets on github
 
 """
+from __future__ import division, print_function
 import datetime as dt
 import re
 
@@ -47,7 +48,7 @@ def str2dt(datestr):
     if isinstance(datestr,dt.datetime): return datestr
 
     if not isinstance(datestr,str):
-        print 'date conversion:  argument must be a string'
+        print('date conversion:  argument must be a string')
         return None
 
     dtnow=dt.datetime.utcnow()
@@ -122,7 +123,7 @@ def str2dt(datestr):
         try: return dt.datetime.strptime(datestr_today,fmt)
         except: pass        
 
-    print "did not convert date string to datetime.  returning None: >>%s<<" % datestr_today
+    print("did not convert date string to datetime.  returning None: >>%s<<" % datestr_today)
     return None
 
 # convert a timedelta to total number of seconds
