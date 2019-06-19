@@ -12,7 +12,8 @@ $license: GPLv3 or later, see https://www.gnu.org/licenses/gpl-3.0.txt
 setup for my python packages
 '''
 import os,sys
-from distutils.core import setup
+from setuptools import setup
+
 
 DISTNAME         = 'satorchipy'
 DESCRIPTION      = "Steve's Python stuff"
@@ -26,7 +27,7 @@ DOWNLOAD_URL     = 'https://github.com/satorchi/mypy'
 VERSION          = '1.0'
 
 with open('README.md') as f:
-    long_description = f.readlines()
+    long_description = f.read()
 
 
 setup(name=DISTNAME,
