@@ -17,5 +17,9 @@ from .datefunctions import\
     tot_seconds,\
     roundTime
 
-from .quickplot import\
-    quickplot
+# don't import quickplot if matplotlib is not installed
+try:
+    import matplotlib
+    from .quickplot import quickplot
+except:
+    pass
