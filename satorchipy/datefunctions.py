@@ -66,6 +66,7 @@ def str2dt(datestr):
     datestr=re.sub('[nN]ov\.','11',datestr)
     datestr=re.sub('[oO]ct\.','10',datestr)
     datestr=re.sub('[sS]ep\.','9',datestr)
+    datestr=re.sub('[sS]ept\.','9',datestr)
     datestr=re.sub('[aA]o.t\.','8',datestr)
     datestr=re.sub('[aA]o.t','8',datestr)
     datestr=re.sub('[aA]o.\.','8',datestr)
