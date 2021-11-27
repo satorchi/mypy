@@ -37,7 +37,6 @@ $modified: Tue 26 Sep 2017 10:19:54 CEST
   moved to satorchipy: My python gadgets on github
 
 """
-from __future__ import division, print_function
 import datetime as dt
 import re
 
@@ -99,6 +98,21 @@ def str2dt(datestr):
           '%Y-%m-%dT%H:%M:%S UT',
           "%Y-%m-%dT%H:%M",          
           "%Y-%m-%d",
+          "%Y-%b-%d %H:%M:%S.%f",
+          "%Y-%b-%d %H:%M:%S",
+          "%Y-%b-%d %H:%M:%SZ",
+          "%Y-%b-%d %H:%M:%S.%fZ",
+          '%Y-%b-%d %H:%M:%S.%f UT',
+          '%Y-%b-%d %H:%M:%S UT',
+          "%Y-%b-%d %H:%M",
+          "%Y-%b-%dT%H:%M:%S.%f",
+          "%Y-%b-%dT%H:%M:%S",
+          "%Y-%b-%dT%H:%M:%SZ",
+          "%Y-%b-%dT%H:%M:%S.%fZ",
+          '%Y-%b-%dT%H:%M:%S.%f UT',
+          '%Y-%b-%dT%H:%M:%S UT',
+          "%Y-%b-%dT%H:%M",          
+          "%Y-%b-%d",
           "%Y%m%d-%H%M",
           "D%Y%m%dT%H%M%S",
           "%a %b %d %H:%M:%S %Y",
@@ -108,7 +122,7 @@ def str2dt(datestr):
           "%Y%m%dT%H%M%S.%f",
           "%Y%m%d-%H%M%S.%f",
           "%Y%m%d-%H%M%S",
-          "%Y-%m-%d_%H.%M.%S",]
+          "%Y-%m-%d_%H.%M.%S"]
 
 
     for fmt in fmts:
