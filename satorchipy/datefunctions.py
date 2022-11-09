@@ -113,6 +113,7 @@ def str2dt(datestr):
           '%Y-%b-%dT%H:%M:%S UT',
           "%Y-%b-%dT%H:%M",          
           "%Y-%b-%d",
+          "%Y%m%d",
           "%Y%m%d-%H%M",
           "D%Y%m%dT%H%M%S",
           "%a %b %d %H:%M:%S %Y",
