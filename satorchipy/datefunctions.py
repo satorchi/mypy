@@ -166,3 +166,16 @@ def roundTime(d=None, roundTo=60):
    # // is a floor division, not a comment on following line:
    rounding = (seconds+roundTo/2) // roundTo * roundTo
    return d + dt.timedelta(0,rounding-seconds,-d.microsecond)
+
+def tstamp2dt(tstamp):
+    '''
+    convert a timestamp to a datetime object
+    '''
+    if not (isinstance(tstamp,list) or isinstance(tstamp,np.ndarray)):
+        return dt.datetime.utcfromtimestamp(tstamp)
+
+    date = []
+    for val in tstamp:
+        date.append(dt.datetime.utcfromtimestamp(val))
+    date = np.array(date)
+    return date
