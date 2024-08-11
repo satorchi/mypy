@@ -39,6 +39,7 @@ $modified: Tue 26 Sep 2017 10:19:54 CEST
 """
 import datetime as dt
 import re
+import numpy as np
 
 def isodate(date):
     return date.strftime('%Y-%m-%d %H:%M:%S.%f UT')
