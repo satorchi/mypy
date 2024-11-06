@@ -10,8 +10,9 @@ $license: GPLv3 or later, see https://www.gnu.org/licenses/gpl-3.0.txt
 
 some plotting utilities
 '''
+import matplotlib
 import matplotlib.pyplot as plt
-
+import datetime as dt
 def quickplot(x=None,y=None,title='working',fig=None):
     '''
     make a plot with some basic labeling
