@@ -122,3 +122,31 @@ def winminmax(ax=None,data=None,plot=True):
         
 
     return xmin,xmax,ymin,ymax
+
+def plot_flags(ax,flag,flagpos=None):
+    '''
+    plot labels at data time positions
+
+    arguments:
+
+    ax:  matplotlib axis
+    flag: dictionary with keys that are datetime
+    '''
+    if flagpos is None:
+        minmax = ax.axis()[2:]
+        flagpos = minmax[0] + 0.3*(minmax[1] - minmax[0])
+    for flag_time in flag.keys():
+        tstamp = float(flag_time.strftime('%s.%f'))
+        axmin_stamp = ax.axis()[0]*3600*24
+        axmin_date = dt.datetime.utcfromtimestamp(axmin_stamp)
+        axmax_stamp = ax.axis()[1]*3600*24
+        axmax_date = dt.datetime.utcfromtimestamp(axmax_stamp)
+
+        if flag_time > axmin_date and flag_time < axmax_date:
+            ax.plot([flag_time,flag_time],ax.axis()[2:],ls='dashed',color='red')
+            ax.text(flag_time,flagpos,flag[flag_time],
+                    ha='center',va='bottom',rotation=90,
+                    fontsize=18,
+                    color='black',
+                    bbox=labelprops)
+    return    
