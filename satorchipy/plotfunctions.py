@@ -13,6 +13,42 @@ some plotting utilities
 import matplotlib
 import matplotlib.pyplot as plt
 import datetime as dt
+
+nice_plot_colours = ['green',
+                     'magenta',
+                     '#1f77b4ff',
+                     '#a20cffff',
+                     'olive',
+                     'red',
+                     'blue',
+                     'purple',
+                     '#00cc00',
+                     '#7210a7',
+                     'darkblue',
+                     '#cc0000',
+                     'black',
+                     'cyan']
+nice_plot_markers = ['.','x','d','v','^','o']
+
+def get_colour(idx):
+    '''
+    get a nice plot colour
+    '''
+    ncolours = len(nice_plot_colours)
+    while idx>ncolours:
+        idx -= ncolours
+    return nice_plot_colours[idx]
+
+def get_marker(idx):
+    '''
+    get a nice plot marker
+    '''
+    nmarkers = len(nice_plot_markers)
+    while idx>nmarkers:
+        idx -= nmarkers
+    return nice_plot_markers[idx]
+
+
 def quickplot(x=None,y=None,title='working',fig=None):
     '''
     make a plot with some basic labeling
