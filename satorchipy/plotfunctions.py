@@ -30,6 +30,12 @@ nice_plot_colours = ['green',
                      'cyan']
 nice_plot_markers = ['.','x','d','v','^','o']
 
+labelprops = {}
+labelprops['alpha'] = 0.50
+labelprops['facecolor'] = 'red'
+labelprops['boxstyle'] = 'round'
+labelprops['edgecolor'] = 'red'
+
 def get_colour(idx):
     '''
     get a nice plot colour
