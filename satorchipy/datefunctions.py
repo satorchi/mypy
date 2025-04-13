@@ -37,9 +37,21 @@ $modified: Tue 26 Sep 2017 10:19:54 CEST
   moved to satorchipy: My python gadgets on github
 
 """
+import sys
 import datetime as dt
 import re
 import numpy as np
+
+pythonmajor = sys.version_info.major
+pythonminor = sys.version_info.minor
+def utcnow():
+    '''
+    get the current datetime in UTC depending on python version
+    '''
+    if pythonmajor>=3 and pythonminor>=10:
+        return dt.datetime.now(dt.UTC)
+    return dt.datetime.utcnow()
+
 
 def isodate(date):
     return date.strftime('%Y-%m-%d %H:%M:%S.%f UT')
