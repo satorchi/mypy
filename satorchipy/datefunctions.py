@@ -52,6 +52,14 @@ def utcnow():
         return dt.datetime.now(dt.UTC)
     return dt.datetime.utcnow()
 
+def utcfromtimestamp(tstamp):
+    '''
+    get the datetime from a UTC timestamp
+    '''
+    if pythonmajor>=3 and pythonminor>=10:
+        return dt.datetime.fromtimestamp(tstamp,dt.UTC)
+    return dt.datetime.utcfromtimestamp(tstamp)
+    
 
 def isodate(date):
     return date.strftime('%Y-%m-%d %H:%M:%S.%f UT')
