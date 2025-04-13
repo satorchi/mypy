@@ -15,7 +15,6 @@ import matplotlib.pyplot as plt
 import datetime as dt
 
 nice_plot_colours = ['green',
-                     'magenta',
                      '#1f77b4ff',
                      '#a20cffff',
                      'olive',
@@ -27,6 +26,7 @@ nice_plot_colours = ['green',
                      'darkblue',
                      '#cc0000',
                      'black',
+                     'magenta',
                      'cyan']
 nice_plot_markers = ['.','x','d','v','^','o']
 
@@ -192,3 +192,12 @@ def plot_flags(ax,flag,flagpos=None):
                     color='black',
                     bbox=labelprops)
     return    
+
+def make_legend_label(val_name,val_str,legend_width=40):
+    nspaces = legend_width  - len(val_str)
+    if val_str.find('times')>0:
+        latex_stripped = val_str.replace('$','').replace('{','').replace('}','').replace('\\times','X')
+        nspaces = legend_width - len(latex_stripped)
+    lbl = '%s%s' % (val_name.ljust(nspaces),val_str)
+    print(lbl)
+    return lbl
