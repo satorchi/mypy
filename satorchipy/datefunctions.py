@@ -63,7 +63,7 @@ def str2dt(datestr):
         print('date conversion:  argument must be a string')
         return None
 
-    dtnow=dt.datetime.utcnow()
+    dtnow = utcnow()
     if datestr=="tomorrow":
         return dt.datetime(dtnow.year,dtnow.month,dtnow.day)+dt.timedelta(days=1)
 
@@ -174,7 +174,7 @@ def roundTime(d=None, roundTo=60):
    roundTo : Closest number of seconds to round to, default 1 minute.
    Author: Thierry Husson 2012 - Use it as you want but don't blame me.
    """
-   if d == None : d = dt.datetime.utcnow()
+   if d == None : d = utcnow()
    seconds = (d - d.min).seconds
    # // is a floor division, not a comment on following line:
    rounding = (seconds+roundTo/2) // roundTo * roundTo
