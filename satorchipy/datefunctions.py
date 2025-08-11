@@ -64,7 +64,7 @@ def utcfromtimestamp(tstamp):
 def isodate(date):
     return date.strftime('%Y-%m-%d %H:%M:%S.%f UT')
 
-def str2dt(datestr):
+def str2dt(datestr,verbose=False):
     if isinstance(datestr,dt.datetime): return datestr
 
     if not isinstance(datestr,str):
@@ -165,7 +165,7 @@ def str2dt(datestr):
         try: return dt.datetime.strptime(datestr_today,fmt)
         except: pass        
 
-    print("did not convert date string to datetime.  returning None: >>%s<<" % datestr_today)
+    if verbose: print("did not convert date string to datetime.  returning None: >>%s<<" % datestr)
     return None
 
 # convert a timedelta to total number of seconds
