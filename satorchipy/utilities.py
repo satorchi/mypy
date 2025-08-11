@@ -24,7 +24,7 @@ def assign_value(val_str):
     val = str2dt(val_str)
     if val is not None: return val
 
-    # check if it is a number
+    # check if it is a number or a list
     try:
         val = eval(val_str)
     except:
