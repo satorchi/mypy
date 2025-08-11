@@ -11,15 +11,4 @@ $license: GPLv3 or later, see https://www.gnu.org/licenses/gpl-3.0.txt
 satorchipy is a package of my python gadgets
 
 '''
-from .datefunctions import\
-    isodate,\
-    str2dt,\
-    tot_seconds,\
-    roundTime
-
-# don't import quickplot if matplotlib is not installed
-try:
-    import matplotlib
-    from .quickplot import quickplot
-except:
-    pass
+__version__ = '1.0.0'
