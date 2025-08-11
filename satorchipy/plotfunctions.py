@@ -103,7 +103,7 @@ def mouse_click(event):
     x, y = event.xdata, event.ydata
     if x is None or y is None: return
 
-    msg = '%.8e %.8e\n' % (x,y)
+    msg = '%.16e %.16e\n' % (x,y)
     
     h = open('mousepts.txt','a')
     h.write(msg)
