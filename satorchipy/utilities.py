@@ -61,7 +61,7 @@ def parseargs(argv,expected_args=None):
             continue
 
         # if the argument is on its own, assume it is a boolean option
-        option[arg] = True
+        options[arg] = True
         continue
 
     return options
