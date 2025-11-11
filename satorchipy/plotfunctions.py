@@ -13,7 +13,7 @@ some plotting utilities
 import matplotlib
 import matplotlib.pyplot as plt
 import datetime as dt
-
+import numpy as np
 nice_plot_colours = ['green',
                      '#1f77b4ff',
                      '#a20cffff',
@@ -120,16 +120,9 @@ def mouse_click_int(event):
 
 def mouse_click_date(event):
     x, y = event.xdata, event.ydata
-    # convert matplotlib to datetime
-    # https://matplotlib.org/3.1.1/gallery/text_labels_and_annotations/date.html
-    # matplotlib: days since 0001-01-01 00:00:00 UTC plus one day
-    # tstamp0 = float(str2dt('0001-01-01 00:00:00').strftime('%s'))
-    # #tstamp0 -= (24*3600 - 600 + 40 - 1) # weird extra correction?
-    # tstamp0_days = tstamp0/3600/24
-    # x_stamp = (x + tstamp0_days)*3600*24
     if x is None: return
     x_stamp = x*3600*24
-    x_date = dt.datetime.utcfromtimestamp(x_stamp)
+    x_date = dt.datetime.fromtimestamp(x_stamp)
     print(x,x_date.strftime('%Y-%m-%d %H:%M:%S.%f'), y)
     return
           
@@ -178,11 +171,11 @@ def plot_flags(ax,flag,flagpos=None):
         minmax = ax.axis()[2:]
         flagpos = minmax[0] + 0.3*(minmax[1] - minmax[0])
     for flag_time in flag.keys():
-        tstamp = float(flag_time.strftime('%s.%f'))
+        tstamp = flag_time.timestamp()
         axmin_stamp = ax.axis()[0]*3600*24
-        axmin_date = dt.datetime.utcfromtimestamp(axmin_stamp)
+        axmin_date = dt.datetime.fromtimestamp(axmin_stamp)
         axmax_stamp = ax.axis()[1]*3600*24
-        axmax_date = dt.datetime.utcfromtimestamp(axmax_stamp)
+        axmax_date = dt.datetime.fromtimestamp(axmax_stamp)
 
         if flag_time > axmin_date and flag_time < axmax_date:
             ax.plot([flag_time,flag_time],ax.axis()[2:],ls='dashed',color='red')
@@ -201,3 +194,35 @@ def make_legend_label(val_name,val_str,legend_width=40):
     lbl = '%s%s' % (val_name.ljust(nspaces),val_str)
     print(lbl)
     return lbl
+
+def plot_dayboundaries(ax,H=18,M=0,S=0):
+    '''
+    plot vertical lines showing the days
+
+    ax is a matplotlib axis with x-axis in datetime
+
+    arguments:
+    H,M,S : hour, minutes seconds for the start of each day
+            18:00 UT corresponds to Alto Chorrillos peak temperature
+    '''
+
+    minmax = np.array(ax.axis())
+    xminmax = minmax[:2]
+    yminmax = minmax[2:]
+    x_stamp = xminmax*3600*24
+    d_start = dt.datetime.fromtimestamp(x_stamp[0])
+    d_end = dt.datetime.fromtimestamp(x_stamp[1])
+
+    first_day = dt.datetime(year=d_start.year,month=d_start.month,day=d_start.day,hour=H,minute=M,second=S)
+    last_day = dt.datetime(year=d_end.year,month=d_end.month,day=d_end.day,hour=H,minute=M,second=S)
+
+    day = first_day
+    while day<=last_day:
+        ax.plot([day,day],yminmax,ls='dotted',color='grey')
+        day += dt.timedelta(hours=24)
+
+    return
+
+        
+    
+    
