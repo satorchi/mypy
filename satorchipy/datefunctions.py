@@ -64,6 +64,19 @@ def utcfromtimestamp(tstamp):
 def isodate(date):
     return date.strftime('%Y-%m-%d %H:%M:%S.%f UT')
 
+def get_date(datestr,fmt,tzone=None):
+    '''
+    try to get the date using a given format
+    '''
+    try:
+        date = dt.datetime.strptime(datestr,fmt)
+    except:
+        return None
+
+    if tzone is not None:
+        date = date.replace(tzinfo=tzone)
+    return date
+    
 def str2dt(datestr,verbose=False):
     if isinstance(datestr,dt.datetime): return datestr
 
@@ -71,16 +84,21 @@ def str2dt(datestr,verbose=False):
         print('date conversion:  argument must be a string')
         return None
 
+    tzone = None
+    if datestr.upper().find('UT')>=0 or datestr.upper().find('Z')>=0:
+        tzone = dt.UTC
+
     dtnow = utcnow()
     if datestr=="tomorrow":
         return dt.datetime(dtnow.year,dtnow.month,dtnow.day)+dt.timedelta(days=1)
 
     if datestr.upper()=="NOW": return dtnow
 
-    datestr=datestr.strip()
     datestr=datestr.replace("CONTINUE","").replace("'","") # fits file comment continued on next line
     datestr=re.sub(' UT.*','',datestr) # remove time zone identifier
-
+    datestr=re.sub('Z','',datestr) # remove time zone identifier
+    datestr=datestr.strip()
+    
     # dates sent from a French Windows machine
     datestr=re.sub('[dD].c\\.','12',datestr)
     datestr=re.sub('[nN]ov\\.','11',datestr)
@@ -106,32 +124,16 @@ def str2dt(datestr,verbose=False):
     
     fmts=["%Y-%m-%d %H:%M:%S.%f",
           "%Y-%m-%d %H:%M:%S",
-          "%Y-%m-%d %H:%M:%SZ",
-          "%Y-%m-%d %H:%M:%S.%fZ",
-          '%Y-%m-%d %H:%M:%S.%f UT',
-          '%Y-%m-%d %H:%M:%S UT',
           "%Y-%m-%d %H:%M",
           "%Y-%m-%dT%H:%M:%S.%f",
           "%Y-%m-%dT%H:%M:%S",
-          "%Y-%m-%dT%H:%M:%SZ",
-          "%Y-%m-%dT%H:%M:%S.%fZ",
-          '%Y-%m-%dT%H:%M:%S.%f UT',
-          '%Y-%m-%dT%H:%M:%S UT',
           "%Y-%m-%dT%H:%M",          
           "%Y-%m-%d",
           "%Y-%b-%d %H:%M:%S.%f",
           "%Y-%b-%d %H:%M:%S",
-          "%Y-%b-%d %H:%M:%SZ",
-          "%Y-%b-%d %H:%M:%S.%fZ",
-          '%Y-%b-%d %H:%M:%S.%f UT',
-          '%Y-%b-%d %H:%M:%S UT',
           "%Y-%b-%d %H:%M",
           "%Y-%b-%dT%H:%M:%S.%f",
           "%Y-%b-%dT%H:%M:%S",
-          "%Y-%b-%dT%H:%M:%SZ",
-          "%Y-%b-%dT%H:%M:%S.%fZ",
-          '%Y-%b-%dT%H:%M:%S.%f UT',
-          '%Y-%b-%dT%H:%M:%S UT',
           "%Y-%b-%dT%H:%M",          
           "%Y-%b-%d",
           "%Y%m%d",
@@ -144,26 +146,37 @@ def str2dt(datestr,verbose=False):
           "%Y%m%dT%H%M%S.%f",
           "%Y%m%d-%H%M%S.%f",
           "%Y%m%d-%H%M%S",
-          "%Y-%m-%d_%H.%M.%S",
-          "%Y%m%dT%H%M%SZ"]
+          "%Y-%m-%d_%H.%M.%S"
+          ]
 
 
     for fmt in fmts:
-        try: return dt.datetime.strptime(datestr,fmt)
-        except: pass
+        date = get_date(datestr,fmt,tzone)
+        if date is not None: return date
 
     # special cases, assuming some time today
     ymd=dtnow.strftime('%Y-%m-%d')
     datestr_today=ymd+' '+datestr
     for fmt in fmts:
-        try: return dt.datetime.strptime(datestr_today,fmt)
-        except: pass    
+        try:
+            date = dt.datetime.strptime(datestr_today,fmt)
+        except: continue
+
+        if tzone is not None:
+            date = date.replace(tzinfo=tzone)
+        return date
+        
 
     # another special case:  fractional seconds given with only 3 places
     datestr_today=datestr+'000'
     for fmt in fmts:
-        try: return dt.datetime.strptime(datestr_today,fmt)
-        except: pass        
+        try:
+            date = dt.datetime.strptime(datestr_today,fmt)
+        except: continue
+
+        if tzone is not None:
+            date = date.replace(tzinfo=tzone)
+        return date
 
     if verbose: print("did not convert date string to datetime.  returning None: >>%s<<" % datestr)
     return None
