@@ -14,6 +14,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import datetime as dt
 import numpy as np
+from satorchipy.datefunctions import utcfromtimestamp
 nice_plot_colours = ['green',
                      '#1f77b4ff',
                      '#a20cffff',
@@ -122,7 +123,7 @@ def mouse_click_date(event):
     x, y = event.xdata, event.ydata
     if x is None: return
     x_stamp = x*3600*24
-    x_date = dt.datetime.fromtimestamp(x_stamp)
+    x_date = utcfromtimestamp(x_stamp)
     print(x,x_date.strftime('%Y-%m-%d %H:%M:%S.%f'), y)
     return
           
@@ -170,16 +171,17 @@ def plot_flags(ax,flag,flagpos=None):
     if flagpos is None:
         minmax = ax.axis()[2:]
         flagpos = minmax[0] + 0.3*(minmax[1] - minmax[0])
-    for flag_time in flag.keys():
+    for flag_time_naive in flag.keys():
+        flag_time = flag_time_naive.replace(tzinfo=dt.UTC)
         tstamp = flag_time.timestamp()
         axmin_stamp = ax.axis()[0]*3600*24
-        axmin_date = dt.datetime.fromtimestamp(axmin_stamp)
+        axmin_date = utcfromtimestamp(axmin_stamp)
         axmax_stamp = ax.axis()[1]*3600*24
-        axmax_date = dt.datetime.fromtimestamp(axmax_stamp)
+        axmax_date = utcfromtimestamp(axmax_stamp)
 
         if flag_time > axmin_date and flag_time < axmax_date:
             ax.plot([flag_time,flag_time],ax.axis()[2:],ls='dashed',color='red')
-            ax.text(flag_time,flagpos,flag[flag_time],
+            ax.text(flag_time,flagpos,flag[flag_time_naive],
                     ha='center',va='bottom',rotation=90,
                     fontsize=18,
                     color='black',
@@ -210,11 +212,11 @@ def plot_dayboundaries(ax,H=18,M=0,S=0):
     xminmax = minmax[:2]
     yminmax = minmax[2:]
     x_stamp = xminmax*3600*24
-    d_start = dt.datetime.fromtimestamp(x_stamp[0])
-    d_end = dt.datetime.fromtimestamp(x_stamp[1])
+    d_start = utcfromtimestamp(x_stamp[0])
+    d_end = utcfromtimestamp(x_stamp[1])
 
-    first_day = dt.datetime(year=d_start.year,month=d_start.month,day=d_start.day,hour=H,minute=M,second=S)
-    last_day = dt.datetime(year=d_end.year,month=d_end.month,day=d_end.day,hour=H,minute=M,second=S)
+    first_day = dt.datetime(year=d_start.year,month=d_start.month,day=d_start.day,hour=H,minute=M,second=S).replace(tzinfo=dt.UTC)
+    last_day = dt.datetime(year=d_end.year,month=d_end.month,day=d_end.day,hour=H,minute=M,second=S).replace(tzinfo=dt.UTC)
 
     day = first_day
     while day<=last_day:
