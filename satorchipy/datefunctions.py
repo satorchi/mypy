@@ -48,9 +48,7 @@ def utcnow():
     '''
     get the current datetime in UTC depending on python version
     '''
-    if pythonmajor>=3 and pythonminor>=10:
-        return dt.datetime.now(dt.timezone.utc)
-    return dt.datetime.utcnow()
+    return dt.datetime.now(dt.timezone.utc)
 
 def utcfromtimestamp(tstamp):
     '''
