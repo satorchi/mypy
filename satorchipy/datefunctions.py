@@ -56,9 +56,7 @@ def utcfromtimestamp(tstamp):
     '''
     get the datetime from a UTC timestamp
     '''
-    if pythonmajor>=3 and pythonminor>=10:
-        return dt.datetime.fromtimestamp(tstamp,dt.timezone.utc)
-    return dt.datetime.utcfromtimestamp(tstamp)
+    return dt.datetime.fromtimestamp(tstamp,dt.timezone.utc)
     
 
 def isodate(date):
@@ -206,10 +204,10 @@ def tstamp2dt(tstamp):
     convert a timestamp to a datetime object
     '''
     if not (isinstance(tstamp,list) or isinstance(tstamp,np.ndarray)):
-        return dt.datetime.utcfromtimestamp(tstamp)
+        return utcfromtimestamp(tstamp)
 
     date = []
     for val in tstamp:
-        date.append(dt.datetime.utcfromtimestamp(val))
+        date.append(utcfromtimestamp(val))
     date = np.array(date)
     return date
