@@ -172,7 +172,7 @@ def plot_flags(ax,flag,flagpos=None):
         minmax = ax.axis()[2:]
         flagpos = minmax[0] + 0.3*(minmax[1] - minmax[0])
     for flag_time_naive in flag.keys():
-        flag_time = flag_time_naive.replace(tzinfo=dt.UTC)
+        flag_time = flag_time_naive.replace(tzinfo=dt.timezone.utc)
         tstamp = flag_time.timestamp()
         axmin_stamp = ax.axis()[0]*3600*24
         axmin_date = utcfromtimestamp(axmin_stamp)
@@ -215,8 +215,8 @@ def plot_dayboundaries(ax,H=18,M=0,S=0):
     d_start = utcfromtimestamp(x_stamp[0])
     d_end = utcfromtimestamp(x_stamp[1])
 
-    first_day = dt.datetime(year=d_start.year,month=d_start.month,day=d_start.day,hour=H,minute=M,second=S).replace(tzinfo=dt.UTC)
-    last_day = dt.datetime(year=d_end.year,month=d_end.month,day=d_end.day,hour=H,minute=M,second=S).replace(tzinfo=dt.UTC)
+    first_day = dt.datetime(year=d_start.year,month=d_start.month,day=d_start.day,hour=H,minute=M,second=S,tzinfo=dt.timezone.utc)
+    last_day = dt.datetime(year=d_end.year,month=d_end.month,day=d_end.day,hour=H,minute=M,second=S,tzinfo=dt.timezone.utc)
 
     day = first_day
     while day<=last_day:

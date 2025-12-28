@@ -49,7 +49,7 @@ def utcnow():
     get the current datetime in UTC depending on python version
     '''
     if pythonmajor>=3 and pythonminor>=10:
-        return dt.datetime.now(dt.UTC)
+        return dt.datetime.now(dt.timezone.utc)
     return dt.datetime.utcnow()
 
 def utcfromtimestamp(tstamp):
@@ -57,7 +57,7 @@ def utcfromtimestamp(tstamp):
     get the datetime from a UTC timestamp
     '''
     if pythonmajor>=3 and pythonminor>=10:
-        return dt.datetime.fromtimestamp(tstamp,dt.UTC)
+        return dt.datetime.fromtimestamp(tstamp,dt.timezone.utc)
     return dt.datetime.utcfromtimestamp(tstamp)
     
 
@@ -86,7 +86,7 @@ def str2dt(datestr,verbose=False):
 
     tzone = None
     if datestr.upper().find('UT')>=0 or datestr.upper().find('Z')>=0:
-        tzone = dt.UTC
+        tzone = dt.timezone.utc
 
     dtnow = utcnow()
     if datestr=="tomorrow":
