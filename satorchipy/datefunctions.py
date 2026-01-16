@@ -54,7 +54,13 @@ def utcfromtimestamp(tstamp):
     '''
     get the datetime from a UTC timestamp
     '''
-    return dt.datetime.fromtimestamp(tstamp,dt.timezone.utc)
+    try:
+        dt_time = dt.datetime.fromtimestamp(tstamp,dt.timezone.utc)
+    except:
+        print('ERROR! Could not translate timestamp to datetime: %f' % tstamp)
+        dt_time = None
+              
+    return dt_time
     
 
 def isodate(date):
