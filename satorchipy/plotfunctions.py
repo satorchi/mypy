@@ -172,6 +172,7 @@ def plot_flags(ax,flag,flagpos=None):
         minmax = ax.axis()[2:]
         flagpos = minmax[0] + 0.3*(minmax[1] - minmax[0])
     for flag_time_naive in flag.keys():
+        if flag_time_naive is None: continue
         flag_time = flag_time_naive.replace(tzinfo=dt.timezone.utc)
         tstamp = flag_time.timestamp()
         axmin_stamp = ax.axis()[0]*3600*24
