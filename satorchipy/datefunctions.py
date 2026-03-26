@@ -79,7 +79,7 @@ def get_date(datestr,fmt,tzone=None):
         date = date.replace(tzinfo=tzone)
     return date
     
-def str2dt(datestr,verbose=False):
+def str2dt(datestr,verbose=False,timezone=None):
     if isinstance(datestr,dt.datetime): return datestr
 
     if not isinstance(datestr,str):
@@ -87,6 +87,10 @@ def str2dt(datestr,verbose=False):
         return None
 
     tzone = None
+    if timezone is not None:
+        if timezone.find('UT')>=0:
+            tzone = dt.timezone.utc
+    
     if datestr.upper().find('UT')>=0 or datestr.upper().find('Z')>=0:
         tzone = dt.timezone.utc
 
@@ -97,7 +101,7 @@ def str2dt(datestr,verbose=False):
     if datestr.upper()=="NOW": return dtnow
 
     datestr=datestr.replace("CONTINUE","").replace("'","") # fits file comment continued on next line
-    datestr=re.sub(' UT.*','',datestr) # remove time zone identifier
+    datestr=re.sub('UT.*','',datestr) # remove time zone identifier
     datestr=re.sub('Z','',datestr) # remove time zone identifier
     datestr=datestr.strip()
     
