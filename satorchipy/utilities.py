@@ -65,3 +65,16 @@ def parseargs(argv,expected_args=None):
         continue
 
     return options
+
+def make_errmsg(msg=None):
+    '''
+    make an error message using all the sys exec info
+    '''
+    if msg is None:
+        err_list = []
+    else:
+        err_list = [msg]
+    for info in sys.exc_info():
+        if info is not None:  err_list.append(str(info))            
+    errormsg = ' \n'.join(err_list)
+    return errormsg
