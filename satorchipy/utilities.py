@@ -24,6 +24,12 @@ def assign_value(val_str):
     val = str2dt(val_str)
     if val is not None: return val
 
+    # check if it is a boolean
+    if val_str.upper()=='YES' or val_str.upper()=='TRUE':
+        return True
+    if val_str.upper()=='NO' or val_str.upper()=='FALSE':
+        return False
+
     # check if it is a number or a list
     try:
         val = eval(val_str)
